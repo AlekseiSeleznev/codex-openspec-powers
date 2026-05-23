@@ -1,0 +1,20 @@
+# Local review bundles and archives
+*-claude-full-review/
+*.tar.gz
+CLAUDE_FULL_PROJECT_REVIEW_PROMPT.md
+
+# OS/editor noise
+.DS_Store
+*~
+
+# Local editor and tool state
+.claude/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local environment files
+.env
+.env.*
+!.env.example

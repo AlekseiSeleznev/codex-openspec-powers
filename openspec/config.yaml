@@ -1,0 +1,44 @@
+schema: spec-driven
+
+context: |
+  This repository is Codex OpenSpec Powers, a Codex-native workflow kit for
+  OpenSpec projects. Preserve OpenSpec as the stable core and add Codex
+  prompts, optional skills, overlay manifest/config, and installation guidance
+  around it.
+
+  The overlay must be safe to apply to existing projects. Do not silently
+  overwrite project-owned openspec/changes, openspec/specs, schema choices,
+  source code, tests, or documentation.
+
+  Optional skills are lazy-loaded library skills. Recommend them only when they
+  fit the current OpenSpec step, explain the trigger, and ask for consent
+  before loading them.
+
+  Superpowers are optional methodology accelerators. They support OpenSpec work
+  without replacing proposal, specs, design, or tasks as authoritative artifacts.
+  They are external plugin skills, not vendored project skills. If the
+  Superpowers plugin is unavailable, report that and continue the OpenSpec
+  workflow.
+
+rules:
+  proposal:
+    - Describe the Codex-native overlay purpose and affected OpenSpec lifecycle.
+    - Identify merge-review and never-overwrite risks when installation behavior changes.
+    - If optional Claude review is affected, state that it is OFF by default.
+  specs:
+    - Use observable SHALL requirements and scenarios.
+    - Include prompt/footer/consent marker behavior when workflow UX changes.
+    - Keep openspec/config.yaml limited to OpenSpec-supported top-level keys.
+  design:
+    - Separate OpenSpec core assets from Codex overlay assets.
+    - Explain ownership, repair, and project-content preservation decisions.
+    - Keep optional skill and Superpowers recommendations explicit and consent-based.
+  tasks:
+    - Break work into template-owned prompts, skills, docs, config, and verification.
+    - Include verification for manifest consistency and overlay healthcheck behavior.
+    - Track actual completion with checkboxes; do not mark tasks done before implementation.
+  apply:
+    - Read proposal, specs, design, and tasks before code or template changes.
+    - Preserve project-owned OpenSpec content.
+    - End completed user-facing workflow steps with "**== УРОКИ ==**" and "**== СЛЕДУЮЩИЙ ШАГ ==**".
+    - After an accepted recommended skill, Superpowers step, or review tool runs, return to the active OpenSpec workflow and still emit the post-step footer blocks.

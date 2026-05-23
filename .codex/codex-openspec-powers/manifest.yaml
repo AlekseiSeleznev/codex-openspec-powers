@@ -1,0 +1,281 @@
+version: 1
+template: codex-openspec-powers
+
+precedence:
+  - Specific templateOwnedPaths entries override containing mergeReviewPaths or generatedPaths.
+  - Unclassified files are informational only and must not be repaired silently.
+
+templateOwnedPaths:
+  - .codex/codex-openspec-powers/manifest.yaml
+  - .codex/codex-openspec-powers/claude-review.yaml
+  - .codex/prompts/opsx-new.md
+  - .codex/prompts/opsx-propose.md
+  - .codex/prompts/opsx-continue.md
+  - .codex/prompts/opsx-explore.md
+  - .codex/prompts/opsx-apply.md
+  - .codex/prompts/opsx-verify.md
+  - .codex/prompts/opsx-sync.md
+  - .codex/prompts/opsx-archive.md
+  - .codex/prompts/opsx-ff.md
+  - .codex/prompts/opsx-bulk-archive.md
+  - .codex/prompts/opsx-check-overlay.md
+  - .codex/prompts/opsx-claude-review.md
+  - .codex/skills/architectural-decision-records/**
+  - .codex/skills/c4-diagrams/**
+  - .codex/skills/gherkin-authoring/**
+  - .codex/skills/grill-with-docs/**
+  - .codex/skills/openspec-git-discipline/**
+  - INSTALL_CODEX_TEMPLATE.md
+
+generatedPaths:
+  - .codex/skills/openspec-*
+
+mergeReviewPaths:
+  - .codex/
+  - .codex/prompts/
+  - .codex/skills/
+  - .gitignore
+  - AGENTS.md
+  - README.md
+  - README.en.md
+  - openspec/config.yaml
+  - openspec/schemas/
+
+neverOverwritePaths:
+  - openspec/changes/
+  - openspec/specs/
+  - package.json
+  - pyproject.toml
+  - Cargo.toml
+  - go.mod
+  - src/
+  - tests/
+  - docs/
+
+forbiddenPaths: []
+
+requiredPrompts:
+  - .codex/prompts/opsx-new.md
+  - .codex/prompts/opsx-propose.md
+  - .codex/prompts/opsx-continue.md
+  - .codex/prompts/opsx-explore.md
+  - .codex/prompts/opsx-apply.md
+  - .codex/prompts/opsx-verify.md
+  - .codex/prompts/opsx-sync.md
+  - .codex/prompts/opsx-archive.md
+  - .codex/prompts/opsx-ff.md
+  - .codex/prompts/opsx-bulk-archive.md
+  - .codex/prompts/opsx-check-overlay.md
+  - .codex/prompts/opsx-claude-review.md
+
+requiredMarkers:
+  - id: post-step-lessons
+    paths:
+      - .codex/prompts/opsx-new.md
+      - .codex/prompts/opsx-propose.md
+      - .codex/prompts/opsx-continue.md
+      - .codex/prompts/opsx-explore.md
+      - .codex/prompts/opsx-apply.md
+      - .codex/prompts/opsx-verify.md
+      - .codex/prompts/opsx-sync.md
+      - .codex/prompts/opsx-archive.md
+      - .codex/prompts/opsx-ff.md
+      - .codex/prompts/opsx-bulk-archive.md
+      - .codex/prompts/opsx-check-overlay.md
+      - .codex/prompts/opsx-claude-review.md
+    markers:
+      - "**== УРОКИ ==**"
+      - "**== СЛЕДУЮЩИЙ ШАГ ==**"
+  - id: ordinary-skill-consent
+    paths:
+      - .codex/prompts/opsx-new.md
+      - .codex/prompts/opsx-propose.md
+      - .codex/prompts/opsx-continue.md
+      - .codex/prompts/opsx-explore.md
+      - .codex/prompts/opsx-apply.md
+      - .codex/prompts/opsx-verify.md
+      - .codex/prompts/opsx-archive.md
+      - .codex/prompts/opsx-ff.md
+    markers:
+      - "**== РЕКОМЕНДАЦИЯ ==**"
+      - "Вызвать"
+      - "Выполнить?"
+      - "**Да / Нет**"
+  - id: superpowers-consent
+    paths:
+      - .codex/prompts/opsx-new.md
+      - .codex/prompts/opsx-propose.md
+      - .codex/prompts/opsx-continue.md
+      - .codex/prompts/opsx-explore.md
+      - .codex/prompts/opsx-ff.md
+      - .codex/prompts/opsx-apply.md
+      - .codex/prompts/opsx-verify.md
+      - .codex/prompts/opsx-archive.md
+    markers:
+      - "**== РЕКОМЕНДАЦИЯ ==**"
+      - "Использовать"
+      - "Использовать?"
+      - "**Да / Нет**"
+  - id: recommendation-selection-gate
+    paths:
+      - .codex/prompts/opsx-new.md
+      - .codex/prompts/opsx-propose.md
+      - .codex/prompts/opsx-continue.md
+      - .codex/prompts/opsx-explore.md
+      - .codex/prompts/opsx-ff.md
+      - .codex/prompts/opsx-apply.md
+      - .codex/prompts/opsx-verify.md
+      - .codex/prompts/opsx-archive.md
+    markers:
+      - "Recommendation selection rule:"
+      - "do not render one block per candidate"
+      - "Do not silently omit listed recommendations."
+      - "Есть необязательные шаги, которые могут"
+      - "Что выполнить?"
+      - "Ответьте одним из вариантов:"
+      - "Use this rendered shape."
+      - "do not render sample text as a real recommendation"
+      - "○ 1:"
+      - "○ +"
+      - "○ -"
+      - "Совместимость с **Да / Нет**"
+      - "Recommendation response handling rule:"
+      - "Interpret comma-separated numbers"
+      - "make `**== СЛЕДУЮЩИЙ ШАГ ==**` account"
+  - id: claude-review-status
+    paths:
+      - .codex/prompts/opsx-propose.md
+      - .codex/prompts/opsx-apply.md
+      - .codex/prompts/opsx-verify.md
+      - .codex/prompts/opsx-archive.md
+      - .codex/prompts/opsx-claude-review.md
+    markers:
+      - "**== РЕВЬЮ CLAUDE ==**"
+  - id: overlay-repair-recommendation
+    paths:
+      - .codex/prompts/opsx-check-overlay.md
+    markers:
+      - "**== РЕКОМЕНДАЦИЯ ==**"
+
+requiredSnippets:
+  - id: install-prerequisite
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: "openspec init --tools codex"
+  - id: install-claude-review
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: ".codex/codex-openspec-powers/claude-review.yaml"
+  - id: install-doc-claude-review
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: "Claude OpenSpec Review"
+  - id: install-doc-claude-review-off
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: "OFF"
+  - id: install-doc-claude-review-apply-readiness
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: "apply-readiness"
+  - id: install-doc-claude-review-archive-readiness
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: "archive-readiness"
+  - id: install-doc-claude-review-isolated
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: "isolated"
+  - id: readme-overlay-purpose
+    path: README.en.md
+    text: "Codex-native workflow kit"
+  - id: readme-overlay-command-overview
+    path: README.en.md
+    text: "/opsx:"
+  - id: readme-claude-review
+    path: README.en.md
+    text: "Claude OpenSpec Review"
+  - id: readme-claude-review-file-set
+    path: README.en.md
+    text: "reviewed file set"
+  - id: readme-claude-review-budgets
+    path: README.en.md
+    text: "configured per-stage budgets"
+  - id: readme-claude-review-blockers
+    path: README.en.md
+    text: "Critical/High"
+  - id: readme-superpowers-prerequisite
+    path: README.en.md
+    text: "Superpowers plugin"
+  - id: readme-grouped-recommendations
+    path: README.en.md
+    text: "one grouped `РЕКОМЕНДАЦИЯ` block"
+  - id: readme-license
+    path: README.en.md
+    text: "MIT. See [`LICENSE`](LICENSE)."
+  - id: readme-ru-overlay-purpose
+    path: README.md
+    text: "Набор рабочих процессов Codex"
+  - id: readme-ru-overlay-command-overview
+    path: README.md
+    text: "/opsx:"
+  - id: readme-ru-claude-review
+    path: README.md
+    text: "Claude OpenSpec Review"
+  - id: readme-ru-claude-review-file-set
+    path: README.md
+    text: "набор проверяемых файлов"
+  - id: readme-ru-claude-review-budgets
+    path: README.md
+    text: "настроенными бюджетами"
+  - id: readme-ru-claude-review-blockers
+    path: README.md
+    text: "Critical/High"
+  - id: readme-ru-superpowers-prerequisite
+    path: README.md
+    text: "плагина Superpowers"
+  - id: readme-ru-grouped-recommendations
+    path: README.md
+    text: "один общий блок `РЕКОМЕНДАЦИЯ`"
+  - id: readme-ru-license
+    path: README.md
+    text: "MIT. См. [`LICENSE`](LICENSE)."
+  - id: install-superpowers-prerequisite
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: "Superpowers plugin"
+  - id: install-grouped-recommendations
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: "Optional recommendations are grouped"
+  - id: agents-no-silent-overwrite
+    path: AGENTS.md
+    text: "Do not silently overwrite"
+  - id: agents-grouped-recommendations
+    path: AGENTS.md
+    text: "one grouped `**== РЕКОМЕНДАЦИЯ ==**` block"
+  - id: agents-claude-guardrails
+    path: AGENTS.md
+    text: "Claude"
+  - id: agents-claude-off
+    path: AGENTS.md
+    text: "OFF"
+  - id: agents-claude-blocker
+    path: AGENTS.md
+    text: "blocker"
+  - id: config-overlay-context
+    path: openspec/config.yaml
+    text: "Codex OpenSpec Powers"
+
+healthcheckFixtures:
+  - missing footer markers: expect missing "**== УРОКИ ==**" and "**== СЛЕДУЮЩИЙ ШАГ ==**"
+  - missing manifest: expect broken overlay installation
+  - missing required prompt: expect prompt absence before marker validation
+  - missing consent wording: expect missing "Выполнить?", "Использовать?", or "**Да / Нет**"
+  - missing recommendation selection gate: expect missing "Recommendation selection rule:"
+  - missing or malformed claude-review.yaml: expect broken Claude review config
+  - missing Claude review substep marker: expect missing "**== РЕВЬЮ CLAUDE ==**"
+  - missing propose Claude review marker: expect missing "**== РЕВЬЮ CLAUDE ==**" in opsx-propose.md
+  - templateOwnedPaths override broader classifications: expect missing .codex/prompts/opsx-new.md to be treated as broken template-owned content while unlisted .codex/prompts/user-foo.md is preserved informational
+  - unresolved Critical/High blocker: expect apply/archive gate blocked
+  - Claude review budget limit reached: expect externally unreviewed or incomplete
+  - Claude review pre-call bundle limit exceeded: expect no claude invocation
+  - unavailable or failing Claude CLI: expect externally unreviewed
+  - unknown Claude review stage: expect rejection before any claude invocation
+  - broad Claude review scope: expect rejection of directories, broad globs, and repository root
+  - autoApplySafeDocFixes false: expect consent before any doc-only fix
+  - mid-call Claude failure: expect externally unreviewed or incomplete
+  - opsx-check-overlay missing repair recommendation marker: expect broken repair UX
+  - utility-only prompt without consent wording: expect no issue unless snippet listed
+  - user-added file inside merge-review directory: expect preserved informational report
