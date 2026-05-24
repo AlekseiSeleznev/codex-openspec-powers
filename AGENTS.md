@@ -9,6 +9,15 @@ This project is Codex OpenSpec Powers, a Codex-native OpenSpec workflow kit.
   overlay repair. Specific template-owned file entries override containing
   merge-review directories; user-added files in merge-review directories are
   preserved.
+- Treat `.codex/codex-openspec-powers/template/` as the bundled repair source
+  for template-owned overlay files. When OpenSpec regenerates `/opsx` prompts or
+  other template-owned files, `/opsx:check-overlay` may restore those files from
+  this source after showing the repair plan and receiving confirmation. If the
+  source is missing, stop and ask the user to re-apply the template.
+- `bin/opsx` is the non-interactive repair/install CLI. `opsx init` runs
+  `openspec init --tools codex` and then `opsx repair --yes`; the installed
+  `openspec` shim delegates to the real OpenSpec CLI and automatically runs the
+  same repair after successful Codex `init` or `update`.
 - For `/opsx:apply`, read proposal, specs, design, and tasks from the OpenSpec
   change before modifying code. Update `tasks.md` checkboxes only after the
   corresponding work is actually complete.

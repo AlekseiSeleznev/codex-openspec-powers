@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-v0.1.0-blue">
+  <img alt="Version" src="https://img.shields.io/badge/version-v0.1.1-blue">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green"></a>
   <img alt="OpenSpec" src="https://img.shields.io/badge/OpenSpec-ready-2f6fed">
   <img alt="Codex" src="https://img.shields.io/badge/Codex-native-111827">
@@ -127,13 +127,35 @@ summary or manual resolution records the finding ID.
 
 ## Installation
 
-Prepare the target project with a Codex/OpenSpec foundation:
+Recommended automatic setup:
+
+```bash
+bin/opsx install-auto-repair
+```
+
+Then initialize a new project with:
+
+```bash
+opsx init /path/to/project
+```
+
+or from the project root:
+
+```bash
+opsx init
+```
+
+The command runs `openspec init --tools codex`, applies the overlay, and checks
+that `/opsx` commands were not overwritten. The installed wrapper also catches a
+plain call to:
 
 ```bash
 openspec init --tools codex
 ```
 
-Add the overlay files:
+and automatically runs overlay repair after a successful `init`.
+
+Manual overlay contents:
 
 ```text
 .codex/codex-openspec-powers/
@@ -151,11 +173,16 @@ already exist, merge-review them instead of replacing them. Do not overwrite
 `openspec/changes/`, `openspec/specs/`, source code, tests, package/build/config
 files, or product documentation without an explicit user decision.
 
-After installation, run:
+For a manual post-installation check, run:
 
 ```text
 /opsx:check-overlay
 ```
+
+If `openspec init --tools codex` or an OpenSpec upgrade overwrites `/opsx`
+commands, automatic repair restores template-owned files from the bundled
+repair source set in `.codex/codex-openspec-powers/template/`.
+`/opsx:check-overlay` remains the manual verification and safe repair-plan view.
 
 Detailed installation notes are in
 [INSTALL_CODEX_TEMPLATE.md](INSTALL_CODEX_TEMPLATE.md).
@@ -163,10 +190,11 @@ Detailed installation notes are in
 ## Repository Layout
 
 ```text
+bin/                              `opsx` CLI and automatic repair wrapper
 .codex/
   prompts/                         Codex slash-command prompts
   skills/                          OpenSpec lifecycle and optional skills
-  codex-openspec-powers/           Overlay manifest and Claude config
+  codex-openspec-powers/           Overlay manifest, Claude config, and bundled repair source set
 openspec/
   config.yaml                       OpenSpec context and rules for the overlay
   specs/                           Published overlay requirements
@@ -184,7 +212,7 @@ openspec list --specs
 
 ## Version
 
-Current release: `v0.1.0`.
+Current release: `v0.1.1`.
 
 ## License
 

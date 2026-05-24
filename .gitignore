@@ -11,6 +11,8 @@ CLAUDE_FULL_PROJECT_REVIEW_PROMPT.md
 .claude/
 .idea/
 .vscode/
+__pycache__/
+*.pyc
 *.swp
 *.swo
 

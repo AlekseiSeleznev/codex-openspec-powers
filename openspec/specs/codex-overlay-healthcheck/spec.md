@@ -53,6 +53,24 @@ behavior where possible and re-apply only template-owned additions.
 - **THEN** Codex restores only those missing additions and leaves unrelated
   generated content intact
 
+#### Scenario: Template-owned prompt was regenerated
+- **WHEN** `openspec init --tools codex` or an OpenSpec upgrade overwrites a
+  manifest-listed `/opsx` prompt
+- **THEN** Codex detects the missing markers and prepares a repair plan that
+  restores the prompt from the bundled repair source after user confirmation
+
+#### Scenario: Command-line repair restores regenerated prompt
+- **WHEN** the command-line auto-repair runs after `openspec init --tools codex`
+  or `openspec update` overwrote a manifest-listed `/opsx` prompt
+- **THEN** it restores the prompt from the bundled repair source without
+  requiring a manual `/opsx:check-overlay` step
+
+#### Scenario: Manual command-line repair uses the installed bundle
+- **WHEN** a project already contains `.codex/codex-openspec-powers/template/`
+  and the user runs `opsx repair --yes` from that project
+- **THEN** the repair uses the project's installed bundle as the source instead
+  of comparing the damaged live prompt to itself
+
 #### Scenario: Template-owned file source is unavailable
 - **WHEN** a template-owned prompt, config, documentation file, or skill is
   missing and the bundled template source for that file is unavailable in the
@@ -62,14 +80,26 @@ behavior where possible and re-apply only template-owned additions.
 
 ### Requirement: Overlay ownership is manifest-driven
 The template SHALL include a manifest that enumerates template-owned paths,
-required markers, required snippets, generated paths, and merge-review paths.
-Healthcheck and repair SHALL use this manifest instead of guessing ownership.
+required markers, required snippets, generated paths, merge-review paths, and
+the bundled repair source root. Healthcheck and repair SHALL use this manifest
+instead of guessing ownership.
 
 #### Scenario: Manifest has minimum structure
 - **WHEN** a user opens `.codex/codex-openspec-powers/manifest.yaml`
 - **THEN** it contains version, template, template-owned paths, generated paths,
   merge-review paths, never-overwrite paths, required markers, required
-  snippets, required prompts, and forbidden paths
+  snippets, required prompts, forbidden paths, and `repairSources.root`
+
+#### Scenario: Bundled repair source path is deterministic
+- **WHEN** the healthcheck needs to repair a template-owned target
+- **THEN** it derives the source path from `repairSources.root` plus the target
+  path and excludes the source bundle itself from recursive repair source
+  lookup
+
+#### Scenario: CLI and prompt repair use the same ownership model
+- **WHEN** `/opsx:check-overlay` or `opsx repair --yes` repairs an overlay
+- **THEN** both use the same manifest `templateOwnedPaths`, precedence rules,
+  and bundled repair source root
 
 #### Scenario: Missing required prompt is detected
 - **WHEN** the healthcheck runs and a prompt listed in the manifest's required
@@ -129,6 +159,17 @@ Healthcheck and repair SHALL use this manifest instead of guessing ownership.
 - **WHEN** a repair is approved
 - **THEN** Codex modifies only manifest-listed template-owned additions or
   explicitly approved merge-review paths
+
+#### Scenario: Repair source bundle is preserved
+- **WHEN** a path is under `.codex/codex-openspec-powers/template/`
+- **THEN** Codex treats it as template-owned repair source content and does not
+  classify files inside it as live prompts or user prompt additions
+
+#### Scenario: Automatic repair is limited to template-owned paths
+- **WHEN** `opsx repair --yes` runs non-interactively
+- **THEN** it writes only manifest-listed template-owned files from bundled
+  sources and does not modify project-owned changes, specs, source code, tests,
+  package files, or documentation
 
 ### Requirement: Healthcheck enforces MUST criteria
 The overlay healthcheck SHALL treat missing core overlay behavior as a broken
@@ -201,6 +242,20 @@ sample trees that make healthcheck behavior verifiable.
   listed in required prompts
 - **THEN** the expected output identifies the missing prompt before marker
   validation
+
+#### Scenario: Overwritten prompt repair-source fixture is checked
+- **WHEN** the healthcheck is verified against a sample overlay whose
+  `.codex/prompts/opsx-apply.md` was regenerated without required overlay
+  markers while its bundled repair source exists
+- **THEN** the expected output identifies the prompt as repairable from
+  `.codex/codex-openspec-powers/template/.codex/prompts/opsx-apply.md`
+
+#### Scenario: Missing repair-source bundle fixture is checked
+- **WHEN** the healthcheck is verified against a sample overlay with overwritten
+  template-owned prompts and no `.codex/codex-openspec-powers/template/` source
+  bundle
+- **THEN** the expected output instructs the user to re-apply the template
+  rather than inventing replacement prompt content
 
 #### Scenario: Missing consent wording fixture is checked
 - **WHEN** the healthcheck is verified against a sample overlay missing

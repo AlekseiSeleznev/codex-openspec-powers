@@ -1,0 +1,37 @@
+claudeOpenSpecReview:
+  enabled: false
+  model: default
+  effort: default
+  maxBudgetUsd:
+    propose: 0.50
+    applyReadiness: 1.50
+    archiveReadiness: 1.00
+  # Optional per-stage model/effort overrides use canonical camelCase YAML keys.
+  # Omit a stage block when no override is needed.
+  # stageOptions:
+  #   propose:
+  #     model: default
+  #     effort: default
+  #   applyReadiness:
+  #     model: default
+  #     effort: default
+  #   archiveReadiness:
+  #     model: default
+  #     effort: default
+  autoApplySafeDocFixes: false
+  blockOnCriticalHigh: true
+  saveReviews: true
+  preCallLimits:
+    propose:
+      maxInputBytes: 200000
+      maxFiles: 30
+    applyReadiness:
+      maxInputBytes: 400000
+      maxFiles: 50
+    archiveReadiness:
+      maxInputBytes: 300000
+      maxFiles: 50
+
+# Canonical YAML stage keys are propose, applyReadiness, and archiveReadiness.
+# Kebab-case YAML keys such as apply-readiness and archive-readiness are ignored
+# by the overlay and should be reported as warnings when found.

@@ -23,6 +23,33 @@ OpenSpec changes, specs, or configuration choices.
 - **THEN** the project contains the minimal OpenSpec and Codex files required to
   operate the Codex OpenSpec Powers workflow as a reusable template
 
+### Requirement: Automatic init applies and repairs the overlay
+The template SHALL provide a command-line path that runs OpenSpec initialization
+and restores template-owned overlay files automatically.
+
+#### Scenario: User initializes through opsx
+- **WHEN** a user runs `opsx init` in a new project or passes a target path
+- **THEN** the command runs `openspec init --tools codex`, applies
+  Codex OpenSpec Powers, runs non-interactive overlay repair, and reports the
+  resulting overlay health
+
+#### Scenario: User initializes through openspec after installing auto-repair
+- **WHEN** a user has installed the auto-repair shim and runs
+  `openspec init --tools codex`
+- **THEN** the shim delegates to the real OpenSpec CLI first and, after a
+  successful initialization, automatically runs overlay repair for the same
+  target project
+
+#### Scenario: OpenSpec update regenerates instructions
+- **WHEN** a user runs `openspec update` through the installed shim
+- **THEN** the real OpenSpec update runs first and the overlay repair runs after
+  the update succeeds
+
+#### Scenario: Non-Codex OpenSpec init is explicit
+- **WHEN** a user runs `openspec init --tools none` or another explicit tool
+  list that does not include `codex` or `all`
+- **THEN** the shim does not apply the Codex OpenSpec Powers overlay
+
 ### Requirement: Target file set is explicit
 The template SHALL define the Codex/OpenSpec files that belong to the reusable
 overlay.
@@ -58,6 +85,17 @@ to apply the overlay safely.
 - **THEN** it lists safe-to-add paths, merge-review paths, never-overwrite
   paths, optional project-specific schema handling, and the instruction to run
   `/opsx:check-overlay` after OpenSpec updates
+
+#### Scenario: User reads automatic setup guidance
+- **WHEN** a user opens `INSTALL_CODEX_TEMPLATE.md`
+- **THEN** it documents `opsx install-auto-repair`, `opsx init`, and the
+  `openspec` shim behavior for automatic post-init and post-update repair
+
+#### Scenario: User reads repair-source installation guidance
+- **WHEN** a user opens `INSTALL_CODEX_TEMPLATE.md`
+- **THEN** it explains that `.codex/codex-openspec-powers/template/` contains
+  bundled repair sources for template-owned files and that `/opsx:check-overlay`
+  uses those sources to restore overwritten `/opsx` prompts after confirmation
 
 #### Scenario: User reads Claude review installation guidance
 - **WHEN** a user opens `INSTALL_CODEX_TEMPLATE.md`
