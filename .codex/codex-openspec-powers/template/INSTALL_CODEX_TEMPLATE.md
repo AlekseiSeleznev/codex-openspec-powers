@@ -30,6 +30,15 @@ OpenSpec command usable: when a user runs `openspec init --tools codex` or
 `openspec update`, the real OpenSpec CLI runs first and the overlay repair runs
 after the OpenSpec command succeeds.
 
+When the user starts from Codex instead of the shell, they can run:
+
+```text
+/opsx:init
+```
+
+The prompt invokes `opsx init`, verifies the result with `opsx doctor`, and
+then proposes `/opsx:explore` as the first OpenSpec workflow step.
+
 ## Manual prerequisite
 
 Prepare the target project with an OpenSpec Codex foundation first:

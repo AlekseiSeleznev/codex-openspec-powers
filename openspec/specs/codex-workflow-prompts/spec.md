@@ -8,15 +8,21 @@ post-step footer blocks.
 ## Requirements
 ### Requirement: Codex prompts cover the OpenSpec lifecycle
 The template SHALL provide Codex prompt files for the core OpenSpec lifecycle so
-users can drive proposal, exploration, continuation, implementation, validation,
-synchronization, fast-forward artifact creation, archive, and bulk archive
-flows from Codex.
+users can drive initialization, proposal, exploration, continuation,
+implementation, validation, synchronization, fast-forward artifact creation,
+archive, and bulk archive flows from Codex.
 
 #### Scenario: User installs Codex workflow prompts
 - **WHEN** the Codex overlay is installed
-- **THEN** the project contains Codex prompt definitions for `/opsx:new`,
-  `/opsx:propose`, `/opsx:continue`, `/opsx:explore`, `/opsx:apply`,
-  `/opsx:verify`, `/opsx:sync`, and `/opsx:archive`
+- **THEN** the project contains Codex prompt definitions for `/opsx:init`,
+  `/opsx:new`, `/opsx:propose`, `/opsx:continue`, `/opsx:explore`,
+  `/opsx:apply`, `/opsx:verify`, `/opsx:sync`, and `/opsx:archive`
+
+#### Scenario: User initializes a project from Codex
+- **WHEN** a user invokes `/opsx:init`
+- **THEN** Codex runs `opsx init` for the current project or supplied path,
+  verifies the result with `opsx doctor`, and suggests `/opsx:explore` as the
+  first OpenSpec workflow command
 
 #### Scenario: User installs auxiliary lifecycle prompts
 - **WHEN** the Codex overlay is installed

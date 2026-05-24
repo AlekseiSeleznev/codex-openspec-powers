@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-v0.1.1-blue">
+  <img alt="Version" src="https://img.shields.io/badge/version-v0.1.2-blue">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green"></a>
   <img alt="OpenSpec" src="https://img.shields.io/badge/OpenSpec-ready-2f6fed">
   <img alt="Codex" src="https://img.shields.io/badge/Codex-native-111827">
@@ -45,6 +45,7 @@ Prompt files live in `.codex/prompts`.
 
 | Command | Purpose |
 | --- | --- |
+| `/opsx:init` | Initialize a new project from Codex: run `opsx init`, restore the overlay, and check health. |
 | `/opsx:new` | Create an OpenSpec change. |
 | `/opsx:propose` | Prepare proposal, specs, design, and tasks. |
 | `/opsx:continue` | Continue an existing change. |
@@ -155,6 +156,15 @@ openspec init --tools codex
 
 and automatically runs overlay repair after a successful `init`.
 
+When starting a project directly from Codex, use:
+
+```text
+/opsx:init
+```
+
+It runs `opsx init`, then `opsx doctor`, and suggests `/opsx:explore` for the
+first project idea.
+
 Manual overlay contents:
 
 ```text
@@ -212,7 +222,7 @@ openspec list --specs
 
 ## Version
 
-Current release: `v0.1.1`.
+Current release: `v0.1.2`.
 
 ## License
 

@@ -33,6 +33,12 @@ and restores template-owned overlay files automatically.
   Codex OpenSpec Powers, runs non-interactive overlay repair, and reports the
   resulting overlay health
 
+#### Scenario: User initializes from Codex
+- **WHEN** a user invokes `/opsx:init` in Codex
+- **THEN** the prompt uses the same `opsx init` initialization path, verifies
+  the initialized project with `opsx doctor`, and recommends `/opsx:explore`
+  as the next workflow step
+
 #### Scenario: User initializes through openspec after installing auto-repair
 - **WHEN** a user has installed the auto-repair shim and runs
   `openspec init --tools codex`
@@ -88,8 +94,9 @@ to apply the overlay safely.
 
 #### Scenario: User reads automatic setup guidance
 - **WHEN** a user opens `INSTALL_CODEX_TEMPLATE.md`
-- **THEN** it documents `opsx install-auto-repair`, `opsx init`, and the
-  `openspec` shim behavior for automatic post-init and post-update repair
+- **THEN** it documents `opsx install-auto-repair`, `opsx init`, `/opsx:init`,
+  and the `openspec` shim behavior for automatic post-init and post-update
+  repair
 
 #### Scenario: User reads repair-source installation guidance
 - **WHEN** a user opens `INSTALL_CODEX_TEMPLATE.md`

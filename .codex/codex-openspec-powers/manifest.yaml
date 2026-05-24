@@ -15,6 +15,7 @@ templateOwnedPaths:
   - .codex/codex-openspec-powers/manifest.yaml
   - .codex/codex-openspec-powers/claude-review.yaml
   - .codex/codex-openspec-powers/template/**
+  - .codex/prompts/opsx-init.md
   - .codex/prompts/opsx-new.md
   - .codex/prompts/opsx-propose.md
   - .codex/prompts/opsx-continue.md
@@ -62,6 +63,7 @@ neverOverwritePaths:
 forbiddenPaths: []
 
 requiredPrompts:
+  - .codex/prompts/opsx-init.md
   - .codex/prompts/opsx-new.md
   - .codex/prompts/opsx-propose.md
   - .codex/prompts/opsx-continue.md
@@ -78,6 +80,7 @@ requiredPrompts:
 requiredMarkers:
   - id: post-step-lessons
     paths:
+      - .codex/prompts/opsx-init.md
       - .codex/prompts/opsx-new.md
       - .codex/prompts/opsx-propose.md
       - .codex/prompts/opsx-continue.md
@@ -174,6 +177,9 @@ requiredSnippets:
   - id: install-opsx-init-command
     path: INSTALL_CODEX_TEMPLATE.md
     text: "opsx init"
+  - id: install-codex-init-prompt
+    path: INSTALL_CODEX_TEMPLATE.md
+    text: "/opsx:init"
   - id: install-claude-review
     path: INSTALL_CODEX_TEMPLATE.md
     text: ".codex/codex-openspec-powers/claude-review.yaml"
@@ -201,6 +207,9 @@ requiredSnippets:
   - id: readme-opsx-init
     path: README.en.md
     text: "opsx init"
+  - id: readme-opsx-init-prompt
+    path: README.en.md
+    text: "/opsx:init"
   - id: readme-claude-review
     path: README.en.md
     text: "Claude OpenSpec Review"
@@ -231,6 +240,9 @@ requiredSnippets:
   - id: readme-ru-opsx-init
     path: README.md
     text: "opsx init"
+  - id: readme-ru-opsx-init-prompt
+    path: README.md
+    text: "/opsx:init"
   - id: readme-ru-claude-review
     path: README.md
     text: "Claude OpenSpec Review"
@@ -282,6 +294,9 @@ requiredSnippets:
   - id: openspec-shim-auto-repair
     path: bin/openspec-shim
     text: "auto-repair after OpenSpec command"
+  - id: opsx-init-prompt-runs-init
+    path: .codex/prompts/opsx-init.md
+    text: "opsx init"
   - id: manifest-repair-source-root
     path: .codex/codex-openspec-powers/manifest.yaml
     text: "repairSources:"
@@ -296,6 +311,7 @@ requiredSnippets:
     text: "bundled repair source set"
 
 healthcheckFixtures:
+  - missing init prompt: expect missing .codex/prompts/opsx-init.md before marker validation
   - missing footer markers: expect missing "**== УРОКИ ==**" and "**== СЛЕДУЮЩИЙ ШАГ ==**"
   - missing manifest: expect broken overlay installation
   - missing required prompt: expect prompt absence before marker validation
